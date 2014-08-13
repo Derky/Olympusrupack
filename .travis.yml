@@ -4,6 +4,20 @@ php:
   - 5.3.3
   - 5.5
 
+env:
+  global:
+    - PHPBB_TAG="release-3.1.0-RC3"  # CHANGE the tag to checkout for validation HERE
+
+before_install:
+ - sudo mkdir -p 3.1/ru
+ - sudo mkdir -p 3.1/en/styles/prosilver/theme
+ - sudo mv language 3.1/ru
+ - sudo mv styles 3.1/ru
+ - sudo rm -r 3.1/ru/styles/subsilver2
+ - git clone --branch $PHPBB_TAG "https://github.com/phpbb/phpbb.git"
+ - sudo mv phpbb/phpBB/language 3.1/en
+ - sudo mv phpbb/phpBB/styles/prosilver/theme/en 3.1/en/styles/prosilver/theme
+
 install:
   - php composer.phar install --dev --no-interaction --prefer-source
 
